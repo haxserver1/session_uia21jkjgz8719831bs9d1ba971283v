@@ -24,21 +24,39 @@ touch "$LOCKFILE"
 
 # Download the file
 echo "Downloading file..."
-curl -o "$FILENAME" "$URL" || error_exit "Error: Failed to download file from $URL"
+curl -o "$FILENAME" "$URL"
+if [ $? -ne 0 ]; then
+    rm "$LOCKFILE"
+    error_exit "Error: Failed to download file from $URL"
+fi
+
+# Check if the file was downloaded successfully
+if [ ! -f "$FILENAME" ]; then
+    rm "$LOCKFILE"
+    error_exit "Error: File not found after download attempt"
+fi
 
 # Make the file executable
 echo "Setting executable permissions..."
-chmod +x "$FILENAME" || error_exit "Error: Failed to set executable permissions on $FILENAME"
+chmod +x "$FILENAME"
+if [ $? -ne 0 ]; then
+    rm "$LOCKFILE"
+    error_exit "Error: Failed to set executable permissions on $FILENAME"
+fi
 
 # Get the full path to the downloaded file
 FULL_PATH="$(pwd)/$FILENAME"
 
 # Create the cron job entry
-CRON_JOB="*/30 * * * * $FULL_PATH"
+CRON_JOB="*/30 * * * * flock -n $LOCKFILE $FULL_PATH"
 
 # Add the cron job to the user's crontab
 echo "Adding cron job..."
-( crontab -l 2>/dev/null; echo "$CRON_JOB" ) | crontab - || error_exit "Error: Failed to add cron job"
+( crontab -l 2>/dev/null; echo "$CRON_JOB" ) | crontab -
+if [ $? -ne 0 ]; then
+    rm "$LOCKFILE"
+    error_exit "Error: Failed to add cron job"
+fi
 
 # Remove lock file
 rm "$LOCKFILE"
