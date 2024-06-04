@@ -22,7 +22,7 @@ kill_existing_instances() {
 
 # Download the file
 echo "Downloading file..."
-curl -o "$FILENAME" "$URL"
+wget -O "$FILENAME" "$URL"
 if [ $? -ne 0 ]; then
     error_exit "Error: Failed to download file from $URL"
 fi
