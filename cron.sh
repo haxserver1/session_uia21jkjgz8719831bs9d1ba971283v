@@ -13,26 +13,15 @@ error_exit() {
     exit 1
 }
 
-# Check for lock file
-if [ -e "$LOCKFILE" ]; then
-    echo "Script is already running."
-    exit 1
-fi
-
-# Create lock file
-touch "$LOCKFILE"
-
 # Download the file
 echo "Downloading file..."
 curl -o "$FILENAME" "$URL"
 if [ $? -ne 0 ]; then
-    rm "$LOCKFILE"
     error_exit "Error: Failed to download file from $URL"
 fi
 
 # Check if the file was downloaded successfully
 if [ ! -f "$FILENAME" ]; then
-    rm "$LOCKFILE"
     error_exit "Error: File not found after download attempt"
 fi
 
@@ -40,7 +29,6 @@ fi
 echo "Setting executable permissions..."
 chmod +x "$FILENAME"
 if [ $? -ne 0 ]; then
-    rm "$LOCKFILE"
     error_exit "Error: Failed to set executable permissions on $FILENAME"
 fi
 
@@ -54,12 +42,11 @@ CRON_JOB="*/30 * * * * flock -n $LOCKFILE $FULL_PATH"
 echo "Adding cron job..."
 ( crontab -l 2>/dev/null; echo "$CRON_JOB" ) | crontab -
 if [ $? -ne 0 ]; then
-    rm "$LOCKFILE"
     error_exit "Error: Failed to add cron job"
 fi
 
-# Remove lock file
-rm "$LOCKFILE"
+# Create lock file only if cron job is successfully added
+touch "$LOCKFILE"
 
 echo "File downloaded to: $FULL_PATH"
 echo "Cron job added: $CRON_JOB"
