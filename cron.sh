@@ -58,5 +58,9 @@ kill_existing_instances
 # Run the script with the arguments
 $FULL_PATH $ARGS
 
+# Display the current cron job list
+echo "Current cron job list for the user:"
+crontab -l
+
 echo "File downloaded to: $FULL_PATH"
 echo "Cron job added: $CRON_JOB"
