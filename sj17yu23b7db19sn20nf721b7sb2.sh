@@ -21,7 +21,7 @@ then
     else
         # Run the file in a screen session
         screen -dmS $SESSION_NAME $COMMAND
-        sleep 1
+        sleep 2
         echo "Command executed in a new screen session."
     fi
 else
@@ -31,7 +31,7 @@ else
     else
         # Run the file in the background using nohup
         nohup $COMMAND &> /dev/null &
-        sleep 1
+        sleep 2
         echo "Command executed in the background."
     fi
 fi
