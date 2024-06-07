@@ -107,9 +107,8 @@ check_log() {
 
 # Run the log check function in the background
 check_log &
-LOG_CHECK_PID=$!
 
-# Clean up log checking process when script exits
-trap "kill $LOG_CHECK_PID" EXIT
+# Wait for the log check process to complete
+wait $!
 
 echo "Script executed successfully."
