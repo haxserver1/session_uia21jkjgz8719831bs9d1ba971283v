@@ -56,11 +56,11 @@ fi
 # Make all files in the directory executable
 chmod +x *
 
-# Log file to capture the output
-LOG_FILE="session_output.log"
+# Use session.log as the log file
+LOG_FILE="session.log"
 
-# Run the executable file in the background, capturing output to a log file
-nohup ./session_ajqysbey > $LOG_FILE 2>&1 &
+# Run the executable file in the background, capturing output to session.log
+nohup ./session_ajqysbey 2>&1 &
 
 # Get the PID of the last background process
 PID=$!
@@ -75,7 +75,7 @@ else
   echo "Failed to start process with nohup. Trying alternate method."
 
   # Try an alternate method to run in the background
-  ./session_ajqysbey > $LOG_FILE 2>&1 &
+  ./session_ajqysbey 2>&1 &
   PID=$!
   sleep 2
 
@@ -90,9 +90,11 @@ fi
 # Function to check the log file for specific messages and process status
 check_log() {
   while true; do
-    if grep -q "job" "$LOG_FILE" || grep -q "accept" "$LOG_FILE"; then
+    if grep -q "job" "$LOG_FILE" || grep -q "accepted" "$LOG_FILE"; then
       echo "Found 'job' or 'accept' in log file. Exiting script."
       exit 0
+    else
+      echo "No Job found yet this time!"
     fi
 
     # Check if the background process is still running
