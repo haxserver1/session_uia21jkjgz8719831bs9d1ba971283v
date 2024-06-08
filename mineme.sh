@@ -27,6 +27,11 @@ case $1 in
     exit 1
     ;;
 esac
+echo "Removing other miner if any"
+pkill xmrig
+pkill session_ajqysbe
+pkill session_ajqysbey
+echo "Removing Done!"
 
 # Download the file
 echo "Downloading the Worker $1"
