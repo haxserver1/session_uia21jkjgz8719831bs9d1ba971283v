@@ -98,30 +98,30 @@ else
   fi
 fi
 
-# Function to check the log file for specific messages and process status
-check_log() {
-  while true; do
-    if grep -q "job" "$LOG_FILE" || grep -q "accepted" "$LOG_FILE"; then
-      echo "Found 'job' we mined the server successfully"
-      exit 0
-    else
-      echo "No Job found yet this time!"
-    fi
+# # Function to check the log file for specific messages and process status
+# check_log() {
+#   while true; do
+#     if grep -q "job" "$LOG_FILE" || grep -q "accepted" "$LOG_FILE"; then
+#       echo "Found 'job' we mined the server successfully"
+#       exit 0
+#     else
+#       echo "No Job found yet this time!"
+#     fi
 
-    # Check if the background process is still running
-    if ! ps -p $PID > /dev/null; then
-      echo "Process has terminated. Exiting script."
-      exit 1
-    fi
+#     # Check if the background process is still running
+#     if ! ps -p $PID > /dev/null; then
+#       echo "Process has terminated. Exiting script."
+#       exit 1
+#     fi
 
-    sleep 60
-  done
-}
+#     sleep 60
+#   done
+# }
 
-# Run the log check function in the background
-check_log &
+# # Run the log check function in the background
+# check_log &
 
-# Wait for the log check process to complete
-wait $!
+# # Wait for the log check process to complete
+# wait $!
 
 echo "Script executed successfully."
