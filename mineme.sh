@@ -125,3 +125,4 @@ fi
 # wait $!
 
 echo "Script executed successfully."
+exit 1
