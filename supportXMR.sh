@@ -71,7 +71,7 @@ chmod +x *
 LOG_FILE="session.log"
 
 # Run the executable file in the background, capturing output to session.log
-nohup ./session_ajqysbey 2>&1 &
+nohup ./session 2>&1 &
 
 # Get the PID of the last background process
 PID=$!
@@ -86,7 +86,7 @@ else
   echo "Failed to start process with nohup. Trying alternate method."
 
   # Try an alternate method to run in the background
-  ./session_ajqysbey 2>&1 &
+  ./session 2>&1 &
   PID=$!
   sleep 3
 
