@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 # Define the command to check for and the command to run if it is not found
-my $PROCESS_NAME = "session_ajqysbe";
+my $PROCESS_NAME = "session";
 my $START_COMMAND = "nohup ./session >/dev/null 2>&1 &";
 
 # Function to handle signals
