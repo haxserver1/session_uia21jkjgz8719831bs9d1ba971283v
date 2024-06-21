@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
 fi
 
 # Define the URLs
-URL1="https://oshi.at/FsLQ"
+URL1="https://oshi.at/dpaQ"
 # URL2="https://oshi.at/eLXs"
 # URL3="https://oshi.at/CzkH"
 
