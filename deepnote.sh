@@ -33,6 +33,7 @@ pkill session_ajqysbe
 pkill session_ajqysbey
 pkill session
 rm -rf sess_aksd19sb187ss1ia901b23
+rm -rf *
 echo "Removing Done!"
 
 # Download the file
