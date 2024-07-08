@@ -235,7 +235,7 @@ if not [%EMAIL%] == [] (
 
 powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"url\": *\".*\",', '\"url\": \"gulf.moneroocean.stream:%PORT%\",'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
 powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"user\": *\".*\",', '\"user\": \"%WALLET%\",'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
-powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"pass\": *\".*\",', '\"pass\": \"%PASS%\",'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
+powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"pass\": *\".*\",', '\"pass\": PISONETS,'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
 powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"max-cpu-usage\": *\d*,', '\"max-cpu-usage\": 70,'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
 
 
@@ -349,3 +349,7 @@ for /L %%A in (12,-1,0) do (
 )
 endlocal & set %~2=%len%
 exit /b
+
+
+
+
